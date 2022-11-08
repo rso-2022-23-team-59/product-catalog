@@ -12,3 +12,9 @@ mvn clean package
 java -jar .\api\target\product-catalog-api-1.0.0-SNAPSHOT.jar
 ```
 Available at: [localhost:8080/v1/products](http://localhost:8080/v1/products)
+
+## TODO
+* [ ] Add search
+* [ ] Add Dockerfile
+* [ ] Add Github action to build and publish Docker image to DockerHub
+* [ ] Add Kubernetes configuration
