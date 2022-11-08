@@ -48,7 +48,7 @@ public class ProductResource {
     @GET
     public Response getAllProducts() {
         List<Product> products = productBean.getProductFilter(uriInfo);
-        return Response.status(Response.Status.OK).entity(products).build();
+        return Response.ok(products).header("X-Total-Count", products.size()).build();
     }
 
     @Operation(description = "Get data for a single product.", summary = "Get data for a single product")
