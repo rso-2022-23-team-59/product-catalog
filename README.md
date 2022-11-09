@@ -44,3 +44,4 @@ We can use the [ElephantSQL](https://www.elephantsql.com/) PostgreSQL database a
 
 * [ ] Add search
 * [ ] Add Kubernetes configuration
+* [ ] Create an organization on Docker Hub
