@@ -43,5 +43,4 @@ We can use the [ElephantSQL](https://www.elephantsql.com/) PostgreSQL database a
 ## TODO
 
 * [ ] Add search
-* [ ] Add Github action to build and publish Docker image to DockerHub
 * [ ] Add Kubernetes configuration
