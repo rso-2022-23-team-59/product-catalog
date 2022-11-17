@@ -29,19 +29,29 @@ Available at: [localhost:8080/v1/products](http://localhost:8080/v1/products)
 # Compile the project to jar compressed file and build a Docker image named product-catalog.
 docker build -t product-catalog .
 
+# Create a new network
+docker network create --driver bridge price-comparison-network
+
+# Run a postgres database in container named pg-products in defined network.
+# Since we have defined both the container name and network, we can connect to this instance
+# using the following connection string "jdbc:postgresql://pg-products:5432/products"
+docker run  -d --name pg-products
+            -e POSTGRES_USER=dbuser
+            -e POSTGRES_PASSWORD=postgres
+            -e POSTGRES_DB=products
+            -p 5432:5432
+            --network price-comparison-network
+            postgres:13
+
 # Run a Docker container from image named product-catalog.
 # Define database server, username and password as environment variables.
-docker run  -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://<DATABASE_SERVER>:5432/<DATABASE_NAME>
-            -e KUMULUZEE_DATASOURCES0_USERNAME=<DATABASE_USERNAME>
-            -e KUMULUZEE_DATASOURCES0_PASSWORD=<DATABASE_PASSWORD>
+docker run  -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://pg-products:5432/products
+            -e KUMULUZEE_DATASOURCES0_USERNAME=dbuser
+            -e KUMULUZEE_DATASOURCES0_PASSWORD=postgres
+            --name product-catalog
             -p 8080:8080
+            --network price-comparison-network
             product-catalog
 ```
 
 We can use the [ElephantSQL](https://www.elephantsql.com/) PostgreSQL database as a Service.
-
-## TODO
-
-* [ ] Add search
-* [ ] Add Kubernetes configuration
-* [ ] Create an organization on Docker Hub
