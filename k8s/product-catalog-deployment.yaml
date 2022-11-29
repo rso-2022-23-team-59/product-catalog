@@ -13,7 +13,7 @@ spec:
         app: product-catalog
     spec:
       containers:
-        - image: metatheory/product-catalog:2022-11-09-11-10-34
+        - image: aljazv/novaslika
           name: product-catalog
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -29,6 +29,8 @@ spec:
             - containerPort: 8080
               name: server
               protocol: TCP
+          imagePullPolicy: IfNotPresent
+
 
 ---
 
