@@ -26,6 +26,7 @@
         <kumuluzee-rest.version>1.5.1</kumuluzee-rest.version>
         <kumuluzee-openapi-mp.version>1.4.0</kumuluzee-openapi-mp.version>
         <kumuluzee-config-mp.version>2.0.0</kumuluzee-config-mp.version>
+        <kumuluzee-health.version>2.4.4</kumuluzee-health.version>
         <postgresql.version>42.5.0</postgresql.version>
     </properties>
 
@@ -67,6 +68,12 @@
                 <groupId>com.kumuluz.ee.config</groupId>
                 <artifactId>kumuluzee-config-mp</artifactId>
                 <version>${kumuluzee-config-mp.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee.health</groupId>
+                <artifactId>kumuluzee-health</artifactId>
+                <version>${kumuluzee-health.version}</version>
             </dependency>
 
             <dependency>

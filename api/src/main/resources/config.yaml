@@ -13,6 +13,16 @@ kumuluzee:
       username: dbuser
       password: postgres
       max-pool-size: 20
+
+  # Database health check - check if datasource is available.
+  # See https://github.com/kumuluz/kumuluzee-health#datasourcehealthcheck
+  # for more information.
+  health:
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/ProductsDS
+        type: liveness
+
   cors-filter:
     annotations:
       my-resource:
