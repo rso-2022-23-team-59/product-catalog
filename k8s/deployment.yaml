@@ -13,7 +13,7 @@ spec:
         app: product-catalog
     spec:
       containers:
-        - image: metatheory/product-catalog:2022-12-02-21-18-19
+        - image: metatheory/product-catalog:2022-12-12-13-34-42
           name: product-catalog
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -30,6 +30,18 @@ spec:
               name: products-port
               protocol: TCP
           imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: products-port
+              initialDelaySeconds: 20
+              periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: products-port
+              initialDelaySeconds: 20
+              periodSeconds: 5
 
 ---
 
