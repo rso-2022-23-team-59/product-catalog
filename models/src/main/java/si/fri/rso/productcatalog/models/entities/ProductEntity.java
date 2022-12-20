@@ -5,7 +5,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "products")
 @NamedQueries(
-    value = {@NamedQuery(name = "ProductEntity.getAll", query = "SELECT products FROM ProductEntity products")}
+    value = {
+            @NamedQuery(name = "ProductEntity.getAll", query = "SELECT products FROM ProductEntity products"),
+            @NamedQuery(name = "ProductEntity.findByName", query = "SELECT products FROM ProductEntity products WHERE LOWER(products.name) LIKE CONCAT('%', :name, '%')"),
+    }
 )
 public class ProductEntity {
 

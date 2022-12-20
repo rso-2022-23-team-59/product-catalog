@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.UriInfo;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -37,6 +38,16 @@ public class ProductBean {
                 .build();
         return JPAUtils.queryEntities(em, ProductEntity.class, queryParameters).stream()
                 .map(ProductConverter::toDto).collect(Collectors.toList());
+    }
+
+    public List<Product> findByName(String productName) {
+        // If query parameter "q" is not set, return an empty array.
+        if (productName == null) return new ArrayList<>();
+
+        TypedQuery<ProductEntity> query = em.createNamedQuery("ProductEntity.findByName", ProductEntity.class);
+        query.setParameter("name", productName.toLowerCase());
+        List<ProductEntity> matches = query.getResultList();
+        return matches.stream().map(ProductConverter::toDto).collect(Collectors.toList());
     }
 
     public Product getProduct(Integer id) {

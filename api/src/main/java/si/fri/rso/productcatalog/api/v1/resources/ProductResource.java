@@ -76,6 +76,23 @@ public class ProductResource {
         return Response.status(Response.Status.OK).entity(product).build();
     }
 
+    @Operation(description = "Search products by name.", summary = "Search products by name")
+    @APIResponses({
+            @APIResponse(
+                    responseCode = "200",
+                    description = "List of products matching search query",
+                    content = @Content(schema = @Schema(implementation = Product.class, type = SchemaType.ARRAY)),
+                    headers = {@Header(name = "X-Total-Count", description = "Number of products in list")}
+            )
+    })
+    @GET
+    @Path("search")
+    public Response searchProducts() {
+        String query = uriInfo.getQueryParameters().getFirst("q");
+        List<Product> products = productBean.findByName(query);
+        return Response.ok(products).header("X-Total-Count", products.size()).build();
+    }
+
     @Operation(description = "Insert new product.", summary = "Insert new product")
     @APIResponses({
         @APIResponse(
