@@ -7,3 +7,13 @@ INSERT INTO products (name, image, description) VALUES ('BOSCH nadreskar GKF 550
 INSERT INTO products (name, image, description) VALUES ('CANDY pralno-sušilni stroj CSWS4852DWE/1-S', 'https://www.bigbang.si/upload/catalog/product/925586/thumb/33142bda22b3d3ee4dadd801de9d99d3c6f0356725a968a0d6_6217e079ef53f_640x640r.webp', 'Pralno sušilni stroj je opremljen s funkcijo KG detektor, ki oceni količino perila ter prilagodi čas pranja in porabo vode ter energije, MPS sistem pa omogoča boljši učinek pranja pri nižjih temperaturah. Poleg klasičnega upravljanja ima stroj na voljo elektronsko upravljanje preko NFC sistema s pomočjo aplikacije Simply-fi.');
 INSERT INTO productstores (product_id, store_id, price) VALUES (1, 1, 100);
 INSERT INTO productstores (product_id, store_id, price) VALUES (1, 2, 120);
+INSERT INTO productstores (product_id, store_id, price) VALUES (1, 3, 80);
+INSERT INTO productstores (product_id, store_id, price) VALUES (1, 4, 150);
+INSERT INTO productstores (product_id, store_id, price) VALUES (2, 1, 100);
+INSERT INTO productstores (product_id, store_id, price) VALUES (2, 2, 80);
+INSERT INTO productstores (product_id, store_id, price) VALUES (2, 3, 210);
+INSERT INTO productstores (product_id, store_id, price) VALUES (3, 1, 120);
+INSERT INTO productstores (product_id, store_id, price) VALUES (3, 2, 80);
+INSERT INTO productstores (product_id, store_id, price) VALUES (4, 1, 120);
+INSERT INTO productstores (product_id, store_id, price) VALUES (4, 2, 80);
+INSERT INTO productstores (product_id, store_id, price) VALUES (4, 3, 200);
