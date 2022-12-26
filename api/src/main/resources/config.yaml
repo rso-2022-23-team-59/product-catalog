@@ -29,7 +29,7 @@ kumuluzee:
         allow-origin: "*"
         allow-subdomains: true
 
-  currency-exchange:
-    currency-exchange-host: currency-exchange.p.rapidapi.com
-    currency-exchange-api-key: ca6ab8fbc2mshd8441de3eb09c6cp1d3122jsnfb158a4954a9
-    default-currency: EUR
+currency-exchange:
+  currency-exchange-host: currency-exchange.p.rapidapi.com
+  currency-exchange-api-key: ca6ab8fbc2mshd8441de3eb09c6cp1d3122jsnfb158a4954a9
+  default-currency: EUR
