@@ -23,7 +23,7 @@ public class ProductStoreEntity {
     private Integer storeId;
 
     @Column(name = "price")
-    private Integer price;
+    private Double price;
 
 
     public Integer getId() {
@@ -50,11 +50,11 @@ public class ProductStoreEntity {
         this.storeId = storeId;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

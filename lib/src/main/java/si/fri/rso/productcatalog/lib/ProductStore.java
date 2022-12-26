@@ -5,7 +5,7 @@ public class ProductStore {
     private Integer id;
     private Product product;
     private Integer storeId;
-    private Integer price;
+    private Double price;
 
 
     public Integer getId() {
@@ -32,11 +32,11 @@ public class ProductStore {
         this.storeId = storeId;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
