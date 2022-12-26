@@ -55,3 +55,15 @@ docker run  -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://pg-product
 ```
 
 We can use the [ElephantSQL](https://www.elephantsql.com/) PostgreSQL database as a Service.
+
+## Configuration
+
+## Consul configuration
+
+For currency exchange to work, the following values must be set in Consul configuration server.
+
+```
+environments/dev/services/product-catalog-microservice/1.0.0/config/currency-exchange/currency-exchange-host
+environments/dev/services/product-catalog-microservice/1.0.0/config/currency-exchange/currency-exchange-api-key
+environments/dev/services/product-catalog-microservice/1.0.0/config/currency-exchange/default-currency
+```
