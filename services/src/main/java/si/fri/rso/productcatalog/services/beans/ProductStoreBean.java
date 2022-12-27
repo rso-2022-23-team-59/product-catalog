@@ -3,7 +3,9 @@ package si.fri.rso.productcatalog.services.beans;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.rso.productcatalog.lib.ProductStore;
+import si.fri.rso.productcatalog.lib.ProductStoreSimple;
 import si.fri.rso.productcatalog.models.converters.ProductStoreConverter;
+import si.fri.rso.productcatalog.models.entities.ProductEntity;
 import si.fri.rso.productcatalog.models.entities.ProductStoreEntity;
 import si.fri.rso.productcatalog.services.config.CurrencyExchangeProperties;
 
@@ -16,6 +18,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import java.net.URI;
+import java.time.Instant;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -123,6 +126,28 @@ public class ProductStoreBean {
         }
 
         return products;
+    }
+
+    public ProductStore insertProductStore(ProductStoreSimple productStoreSimple) {
+
+        ProductEntity product = em.find(ProductEntity.class, productStoreSimple.getProductId());
+
+        ProductStoreEntity entity = new ProductStoreEntity();
+        entity.setStoreId(productStoreSimple.getStoreId());
+        entity.setPrice(productStoreSimple.getPrice());
+        entity.setTimestamp(Instant.now());
+        entity.setProduct(product);
+
+        try {
+            beginTx();
+            em.persist(entity);
+            commitTx();
+        } catch (Exception e) {
+            rollbackTx();
+        }
+
+        String defaultCurrency = currencyExchangeProperties.getDefaultCurrency();
+        return ProductStoreConverter.toDto(entity, defaultCurrency);
     }
 
     private void beginTx() {

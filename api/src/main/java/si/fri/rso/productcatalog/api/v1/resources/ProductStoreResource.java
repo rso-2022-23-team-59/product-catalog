@@ -9,6 +9,7 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import si.fri.rso.productcatalog.lib.Product;
 import si.fri.rso.productcatalog.lib.ProductStore;
+import si.fri.rso.productcatalog.lib.ProductStoreSimple;
 import si.fri.rso.productcatalog.services.beans.ProductStoreBean;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -55,6 +56,20 @@ public class ProductStoreResource {
     public Response getLatestPrices(@PathParam("productId") Integer productId) {
         List<ProductStore> products = productBean.getLatestPrices(uriInfo, productId);
         return Response.ok(products).header("X-Total-Count", products.size()).build();
+    }
+
+    @POST
+    public Response addNewPrice(ProductStoreSimple productStore) {
+        // Required fields: productId, storeId, price
+        if (productStore == null ||
+                productStore.getPrice() == null ||
+                productStore.getStoreId() == null ||
+                productStore.getProductId() == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        ProductStore product = productBean.insertProductStore(productStore);
+        return Response.ok(product).build();
     }
 
 }
