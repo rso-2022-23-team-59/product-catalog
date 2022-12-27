@@ -31,11 +31,25 @@ public class ProductStoreBean {
     @Inject
     private CurrencyExchangeProperties currencyExchangeProperties;
 
-    public List<ProductStore> getProducts() {
-        TypedQuery<ProductStoreEntity> query = em.createNamedQuery("ProductStoreEntity.getAll", ProductStoreEntity.class);
-        List<ProductStoreEntity> resultList = query.getResultList();
-        String currency = currencyExchangeProperties.getDefaultCurrency();
-        return resultList.stream().map(entity-> ProductStoreConverter.toDto(entity, currency)).toList();
+    public List<ProductStore> getLatestPrices(UriInfo uriInfo, Integer productId) {
+        // If the URI contains [currency] parameter, convert prices from EUR to this currency.
+        // Otherwise, return found products with prices in EUR.
+        String defaultCurrency = currencyExchangeProperties.getDefaultCurrency();
+        String currency = uriInfo.getQueryParameters().getFirst("currency");
+
+        // Perform a named native query to get the latest product price from each store.
+        TypedQuery<ProductStoreEntity> query = em.createNamedQuery("ProductStoreEntity.getLatest", ProductStoreEntity.class);
+        query.setParameter(1, productId);
+
+        // Convert ProductStoreEntity objects to DTO.
+        List<ProductStore> products = query.getResultStream()
+                .map(entity-> ProductStoreConverter.toDto(entity, defaultCurrency)).toList();
+
+        if (currency != null) {
+            convertPrices(products, defaultCurrency, currency);
+        }
+
+        return products;
     }
 
     private double roundCurrency(double value) {
@@ -68,6 +82,27 @@ public class ProductStoreBean {
         return Double.parseDouble(responseBody);
     }
 
+    void convertPrices(List<ProductStore> products, String fromCurrency, String toCurrency) {
+        // Get conversion rate between default currency and selected currency.
+        double conversionRate;
+        try {
+            conversionRate = getExchangeRate(fromCurrency, toCurrency);
+        } catch (NullPointerException | NumberFormatException e) {
+            log.warning("Invalid response from currency exchange server.");
+            throw new RuntimeException("Invalid response from currency exchange server.");
+        }
+
+        // Convert prices of all objects to selected currency.
+        for (ProductStore product : products) {
+            Double originalPrice = product.getPrice();
+            if (originalPrice != null) {
+                double convertedPrice = roundCurrency(originalPrice * conversionRate);
+                product.setPrice(convertedPrice);
+                product.setCurrency(toCurrency);
+            }
+        }
+    }
+
     public List<ProductStore> getProductFilter(UriInfo uriInfo) {
         // If the URI contains [currency] parameter, convert prices from EUR to this currency.
         // Otherwise, return found products with prices in EUR.
@@ -83,25 +118,8 @@ public class ProductStoreBean {
         // If the [currency] query argument is provided in the URL, get conversion rate from
         // external API and convert all product prices.
         if (currency != null) {
-
-            // Get conversion rate between default currency and selected currency.
-            double conversionRate = 1.0;
-            try {
-                conversionRate = getExchangeRate(defaultCurrency, currency);
-            } catch (NullPointerException | NumberFormatException e) {
-                log.warning("Invalid response from currency exchange server.");
-                throw new RuntimeException("Invalid response from currency exchange server.");
-            }
-
-            // Convert prices of all objects to selected currency.
-            for (ProductStore product : products) {
-                Double originalPrice = product.getPrice();
-                if (originalPrice != null) {
-                    double convertedPrice = roundCurrency(originalPrice * conversionRate);
-                    product.setPrice(convertedPrice);
-                    product.setCurrency(currency);
-                }
-            }
+            // The convertPrices will modify PDO objects in place.
+            convertPrices(products, defaultCurrency, currency);
         }
 
         return products;

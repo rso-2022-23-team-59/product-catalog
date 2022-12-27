@@ -8,9 +8,14 @@ import java.time.Instant;
 @NamedQueries(
         value = {
                 @NamedQuery(name = "ProductStoreEntity.getAll", query = "SELECT productstores FROM ProductStoreEntity productstores"),
-                @NamedQuery(
+        }
+)
+@NamedNativeQueries(
+        value = {
+                @NamedNativeQuery (
                         name = "ProductStoreEntity.getLatest",
-                        query = "SELECT t1.id, t1.product, t1.storeId, t1.price, t1.timestamp FROM ProductStoreEntity t1 LEFT JOIN ProductStoreEntity t2 ON (t1.storeId = t2.storeId AND t1.product.id = t2.product.id AND t1.timestamp < t2.timestamp) WHERE t1.product.id = :productId AND t2.timestamp IS NULL"
+                        query = "SELECT a.* FROM productstores a LEFT JOIN productstores b ON (a.store_id = b.store_id AND a.product_id = b.product_id AND a.timestamp < b.timestamp) WHERE a.product_id = ? AND b.timestamp IS NULL",
+                        resultClass = ProductStoreEntity.class
                 )
         }
 )

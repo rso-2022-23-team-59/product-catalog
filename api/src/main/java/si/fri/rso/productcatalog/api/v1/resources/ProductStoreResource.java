@@ -13,10 +13,7 @@ import si.fri.rso.productcatalog.services.beans.ProductStoreBean;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -53,6 +50,11 @@ public class ProductStoreResource {
         return Response.ok(products).header("X-Total-Count", products.size()).build();
     }
 
-
+    @GET
+    @Path("/{productId}/prices")
+    public Response getLatestPrices(@PathParam("productId") Integer productId) {
+        List<ProductStore> products = productBean.getLatestPrices(uriInfo, productId);
+        return Response.ok(products).header("X-Total-Count", products.size()).build();
+    }
 
 }
