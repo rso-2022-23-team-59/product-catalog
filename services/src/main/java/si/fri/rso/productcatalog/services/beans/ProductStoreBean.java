@@ -18,7 +18,6 @@ import javax.ws.rs.core.UriInfo;
 import java.net.URI;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 
 @RequestScoped
@@ -35,7 +34,8 @@ public class ProductStoreBean {
     public List<ProductStore> getProducts() {
         TypedQuery<ProductStoreEntity> query = em.createNamedQuery("ProductStoreEntity.getAll", ProductStoreEntity.class);
         List<ProductStoreEntity> resultList = query.getResultList();
-        return resultList.stream().map(ProductStoreConverter::toDto).collect(Collectors.toList());
+        String currency = currencyExchangeProperties.getDefaultCurrency();
+        return resultList.stream().map(entity-> ProductStoreConverter.toDto(entity, currency)).toList();
     }
 
     private double roundCurrency(double value) {
@@ -71,20 +71,20 @@ public class ProductStoreBean {
     public List<ProductStore> getProductFilter(UriInfo uriInfo) {
         // If the URI contains [currency] parameter, convert prices from EUR to this currency.
         // Otherwise, return found products with prices in EUR.
+        String defaultCurrency = currencyExchangeProperties.getDefaultCurrency();
         String currency = uriInfo.getQueryParameters().getFirst("currency");
 
         // First, find products in database using URI parameters for filtering.
         QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery()).defaultOffset(0)
                 .build();
         List<ProductStore> products = JPAUtils.queryEntities(em, ProductStoreEntity.class, queryParameters).stream()
-                .map(ProductStoreConverter::toDto).toList();
+                .map(entity-> ProductStoreConverter.toDto(entity, defaultCurrency)).toList();
 
         // If the [currency] query argument is provided in the URL, get conversion rate from
         // external API and convert all product prices.
         if (currency != null) {
 
             // Get conversion rate between default currency and selected currency.
-            String defaultCurrency = currencyExchangeProperties.getDefaultCurrency();
             double conversionRate = 1.0;
             try {
                 conversionRate = getExchangeRate(defaultCurrency, currency);
@@ -99,6 +99,7 @@ public class ProductStoreBean {
                 if (originalPrice != null) {
                     double convertedPrice = roundCurrency(originalPrice * conversionRate);
                     product.setPrice(convertedPrice);
+                    product.setCurrency(currency);
                 }
             }
         }

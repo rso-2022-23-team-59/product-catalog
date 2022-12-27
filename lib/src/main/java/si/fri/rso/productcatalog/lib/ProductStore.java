@@ -6,7 +6,7 @@ public class ProductStore {
     private Product product;
     private Integer storeId;
     private Double price;
-
+    private String currency;
 
     public Integer getId() {
         return id;
@@ -40,4 +40,11 @@ public class ProductStore {
         this.price = price;
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 }

@@ -5,13 +5,14 @@ import si.fri.rso.productcatalog.models.entities.ProductStoreEntity;
 
 public class ProductStoreConverter {
 
-    public static ProductStore toDto(ProductStoreEntity entity) {
+    public static ProductStore toDto(ProductStoreEntity entity, String currency) {
 
         ProductStore dto = new ProductStore();
         dto.setId(entity.getId());
         dto.setProduct(ProductConverter.toDto(entity.getProduct()));
         dto.setStoreIdId(entity.getStoreId());
         dto.setPrice(entity.getPrice());
+        dto.setCurrency(currency);
         return dto;
 
     }
