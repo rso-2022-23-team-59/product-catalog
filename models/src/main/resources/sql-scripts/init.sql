@@ -6,10 +6,27 @@ INSERT INTO products (name, image, description) VALUES ('MAKITA akumulatorski bl
 INSERT INTO products (name, image, description) VALUES ('BOSCH nadreskar GKF 550', 'https://www.berco.si/wp-content/uploads/2020/11/GKF550-elektricni-robni-rezkalnik-Bosch-768x768.webp', 'Električni robni rezkalnik GKF 550 BOSCH');
 INSERT INTO products (name, image, description) VALUES ('CANDY pralno-sušilni stroj CSWS4852DWE/1-S', 'https://www.bigbang.si/upload/catalog/product/925586/thumb/33142bda22b3d3ee4dadd801de9d99d3c6f0356725a968a0d6_6217e079ef53f_640x640r.webp', 'Pralno sušilni stroj je opremljen s funkcijo KG detektor, ki oceni količino perila ter prilagodi čas pranja in porabo vode ter energije, MPS sistem pa omogoča boljši učinek pranja pri nižjih temperaturah. Poleg klasičnega upravljanja ima stroj na voljo elektronsko upravljanje preko NFC sistema s pomočjo aplikacije Simply-fi.');
 
+-- Multiple prices for product 1 in store 1
 INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 1, 100, '2022-12-27 11:34:00.000000');
+INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 1, 106, '2022-12-27 12:50:00.000000');
+INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 1, 99, '2022-12-27 13:29:00.000000');
+
+-- Multiple prices for product 1 in store 2
 INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 2, 120, '2022-12-27 11:35:00.000000');
+INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 2, 136, '2022-12-28 11:35:00.000000');
+INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 2, 142, '2022-12-29 11:35:00.000000');
+
+-- Multiple prices for product 1 in store 3
 INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 3, 80, '2022-12-27 11:36:00.000000');
+INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 3, 90, '2022-12-27 11:37:00.000000');
+INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 3, 65, '2022-12-27 11:38:00.000000');
+
+-- Multiple prices for product 1 in store 4
 INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 4, 150, '2022-12-27 11:37:00.000000');
+INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 4, 151, '2022-12-27 12:37:00.000000');
+INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (1, 4, 177, '2022-12-27 13:37:00.000000');
+
+-- Product
 INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (2, 1, 100, '2022-12-27 11:38:00.000000');
 INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (2, 2, 80, '2022-12-27 11:39:00.000000');
 INSERT INTO productstores (product_id, store_id, price, timestamp) VALUES (2, 3, 210, '2022-12-27 11:40:00.000000');
