@@ -10,7 +10,8 @@ public class ProductStoreConverter {
         ProductStore dto = new ProductStore();
         dto.setId(entity.getId());
         dto.setProduct(ProductConverter.toDto(entity.getProduct()));
-        dto.setStoreIdId(entity.getStoreId());
+        dto.setStoreId(entity.getStoreId());
+        dto.setTimestamp(entity.getTimestamp());
         dto.setPrice(entity.getPrice());
         dto.setCurrency(currency);
         return dto;
@@ -20,9 +21,10 @@ public class ProductStoreConverter {
     public static ProductStoreEntity toEntity(ProductStore dto) {
 
         ProductStoreEntity entity = new ProductStoreEntity();
-        entity.setStoreIdId(dto.getStoreId());
+        entity.setStoreId(dto.getStoreId());
         entity.setPrice(dto.getPrice());
         entity.setProduct(ProductConverter.toEntity(dto.getProduct()));
+        entity.setTimestamp(dto.getTimestamp());
         return entity;
 
     }

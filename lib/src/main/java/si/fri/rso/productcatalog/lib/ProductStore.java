@@ -1,10 +1,13 @@
 package si.fri.rso.productcatalog.lib;
 
+import java.time.Instant;
+
 public class ProductStore {
 
     private Integer id;
     private Product product;
     private Integer storeId;
+    private Instant timestamp;
     private Double price;
     private String currency;
 
@@ -28,7 +31,7 @@ public class ProductStore {
         return storeId;
     }
 
-    public void setStoreIdId(Integer storeId) {
+    public void setStoreId(Integer storeId) {
         this.storeId = storeId;
     }
 
@@ -46,5 +49,13 @@ public class ProductStore {
 
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
     }
 }

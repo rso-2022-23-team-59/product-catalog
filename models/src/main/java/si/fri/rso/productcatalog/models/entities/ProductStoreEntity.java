@@ -1,6 +1,7 @@
 package si.fri.rso.productcatalog.models.entities;
 
 import javax.persistence.*;
+import java.time.Instant;
 
 @Entity
 @Table(name = "productstores")
@@ -21,6 +22,9 @@ public class ProductStoreEntity {
 
     @Column(name = "store_id")
     private Integer storeId;
+
+    @Column(name = "timestamp")
+    private Instant timestamp;
 
     @Column(name = "price")
     private Double price;
@@ -46,15 +50,23 @@ public class ProductStoreEntity {
         return storeId;
     }
 
-    public void setStoreIdId(Integer storeId) {
-        this.storeId = storeId;
-    }
-
     public Double getPrice() {
         return price;
     }
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
     }
 }
