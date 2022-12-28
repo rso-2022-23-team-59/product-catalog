@@ -1,5 +1,14 @@
 package si.fri.rso.productcatalog.services.beans;
 
+import com.kumuluz.ee.rest.beans.QueryParameters;
+import com.kumuluz.ee.rest.utils.JPAUtils;
+import org.eclipse.microprofile.metrics.annotation.Metered;
+import org.eclipse.microprofile.metrics.annotation.Timed;
+import si.fri.rso.productcatalog.lib.Product;
+import si.fri.rso.productcatalog.models.converters.ProductConverter;
+import si.fri.rso.productcatalog.models.entities.ProductEntity;
+import si.fri.rso.productcatalog.services.messaging.ProductMessageProducer;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -10,14 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-
-import com.kumuluz.ee.rest.beans.QueryParameters;
-import com.kumuluz.ee.rest.utils.JPAUtils;
-
-import si.fri.rso.productcatalog.lib.Product;
-import si.fri.rso.productcatalog.models.converters.ProductConverter;
-import si.fri.rso.productcatalog.models.entities.ProductEntity;
-import si.fri.rso.productcatalog.services.messaging.ProductMessageProducer;
 
 
 @RequestScoped
@@ -55,6 +56,7 @@ public class ProductBean {
         return matches.stream().map(ProductConverter::toDto).collect(Collectors.toList());
     }
 
+    @Metered
     public Product getProduct(Integer id) {
 
         ProductEntity productEntity = em.find(ProductEntity.class, id);

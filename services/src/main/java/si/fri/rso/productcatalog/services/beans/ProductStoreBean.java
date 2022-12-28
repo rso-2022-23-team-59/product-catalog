@@ -2,6 +2,8 @@ package si.fri.rso.productcatalog.services.beans;
 
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
+import org.eclipse.microprofile.metrics.annotation.Metered;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import si.fri.rso.productcatalog.lib.ProductStore;
 import si.fri.rso.productcatalog.lib.ProductStoreSimple;
 import si.fri.rso.productcatalog.models.converters.ProductStoreConverter;
@@ -34,6 +36,7 @@ public class ProductStoreBean {
     @Inject
     private CurrencyExchangeProperties currencyExchangeProperties;
 
+    @Timed
     public List<ProductStore> getLatestPrices(UriInfo uriInfo, Integer productId) {
         // If the URI contains [currency] parameter, convert prices from EUR to this currency.
         // Otherwise, return found products with prices in EUR.
@@ -106,6 +109,7 @@ public class ProductStoreBean {
         }
     }
 
+    @Timed
     public List<ProductStore> getProductFilter(UriInfo uriInfo) {
         // If the URI contains [currency] parameter, convert prices from EUR to this currency.
         // Otherwise, return found products with prices in EUR.
@@ -128,6 +132,7 @@ public class ProductStoreBean {
         return products;
     }
 
+    @Metered
     public ProductStore insertProductStore(ProductStoreSimple productStoreSimple) {
 
         ProductEntity product = em.find(ProductEntity.class, productStoreSimple.getProductId());
