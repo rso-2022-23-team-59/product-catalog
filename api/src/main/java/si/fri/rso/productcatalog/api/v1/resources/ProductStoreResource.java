@@ -1,5 +1,7 @@
 package si.fri.rso.productcatalog.api.v1.resources;
 
+import com.kumuluz.ee.amqp.common.annotations.AMQPConsumer;
+import com.kumuluz.ee.amqp.common.annotations.AMQPProducer;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -11,6 +13,7 @@ import si.fri.rso.productcatalog.lib.Product;
 import si.fri.rso.productcatalog.lib.ProductStore;
 import si.fri.rso.productcatalog.lib.ProductStoreSimple;
 import si.fri.rso.productcatalog.services.beans.ProductStoreBean;
+import si.fri.rso.productcatalog.services.messaging.ProductMessageProducer;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -32,6 +35,9 @@ public class ProductStoreResource {
 
     @Inject
     private ProductStoreBean productBean;
+
+    @Inject
+    private ProductMessageProducer messageProducer;
 
     @Context
     protected UriInfo uriInfo;
@@ -69,6 +75,13 @@ public class ProductStoreResource {
         }
 
         ProductStore product = productBean.insertProductStore(productStore);
+        if (product == null) {
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+
+        // Add product to RabbitMQ event stream.
+        messageProducer.sendNewPrice(product);
+
         return Response.ok(product).build();
     }
 

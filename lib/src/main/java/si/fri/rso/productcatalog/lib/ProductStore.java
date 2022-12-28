@@ -1,8 +1,9 @@
 package si.fri.rso.productcatalog.lib;
 
+import java.io.Serializable;
 import java.time.Instant;
 
-public class ProductStore {
+public class ProductStore implements Serializable {
 
     private Integer id;
     private Product product;
