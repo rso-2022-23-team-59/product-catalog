@@ -23,6 +23,13 @@ kumuluzee:
         jndi-name: jdbc/ProductsDS
         type: liveness
 
+  metrics:
+    web-instrumentation:
+      - name: product-catalog-endpoint
+        url-pattern: /v1/products/*
+      - name: product-prices-catalog-endpoint
+        url-pattern: /v1/product-stores/*
+
   cors-filter:
     annotations:
       my-resource:
