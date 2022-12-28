@@ -33,6 +33,10 @@
             <groupId>com.kumuluz.ee.rest</groupId>
             <artifactId>kumuluzee-rest-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.amqp</groupId>
+            <artifactId>kumuluzee-amqp-rabbitmq</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.json</groupId>

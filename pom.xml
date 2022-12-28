@@ -29,6 +29,8 @@
         <kumuluzee-config.version>1.3.0</kumuluzee-config.version>
         <kumuluzee-health.version>2.4.4</kumuluzee-health.version>
         <postgresql.version>42.5.0</postgresql.version>
+        <kumuluzee-amqp-rabbitmq.version>1.0.0</kumuluzee-amqp-rabbitmq.version>
+
     </properties>
 
     <dependencyManagement>
@@ -84,6 +86,11 @@
                 <artifactId>kumuluzee-health</artifactId>
                 <version>${kumuluzee-health.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.amqp</groupId>
+                <artifactId>kumuluzee-amqp-rabbitmq</artifactId>
+                <version>${kumuluzee-amqp-rabbitmq.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>si.fri.rso.samples</groupId>
@@ -105,6 +112,7 @@
                 <artifactId>product-catalog-lib</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

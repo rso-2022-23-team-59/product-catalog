@@ -28,6 +28,18 @@ kumuluzee:
       my-resource:
         allow-origin: "*"
         allow-subdomains: true
+  amqp:
+    rabbitmq:
+      hosts:
+        - name: PSProduct
+          url: localhost
+          port: 5672
+          username: guest
+          password: guest
+          exchanges:
+            - name: productInfo
+              type: fanout
+
 
 currency-exchange:
   currency-exchange-host: currency-exchange.p.rapidapi.com

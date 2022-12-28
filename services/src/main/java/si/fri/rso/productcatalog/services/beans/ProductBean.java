@@ -17,6 +17,7 @@ import com.kumuluz.ee.rest.utils.JPAUtils;
 import si.fri.rso.productcatalog.lib.Product;
 import si.fri.rso.productcatalog.models.converters.ProductConverter;
 import si.fri.rso.productcatalog.models.entities.ProductEntity;
+import si.fri.rso.productcatalog.services.messaging.ProductMessageProducer;
 
 
 @RequestScoped
@@ -26,6 +27,10 @@ public class ProductBean {
 
     @Inject
     private EntityManager em;
+
+
+    @Inject
+    private ProductMessageProducer productMessageProducer;
 
     public List<Product> getProducts() {
         TypedQuery<ProductEntity> query = em.createNamedQuery("ProductEntity.getAll", ProductEntity.class);
