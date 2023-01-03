@@ -13,7 +13,7 @@ spec:
         app: product-catalog
     spec:
       containers:
-        - image: metatheory/product-catalog:2022-12-28-14-54-38
+        - image: metatheory/product-catalog:latest
           name: product-catalog
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
