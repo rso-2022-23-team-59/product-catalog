@@ -17,9 +17,9 @@ spec:
           name: product-catalog
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-              value: jdbc:postgresql://snuffleupagus.db.elephantsql.com:5432/fbjqnygh
+              value: jdbc:postgresql://mouse.db.elephantsql.com:5432/sqpivtck
             - name: KUMULUZEE_DATASOURCES0_USERNAME
-              value: fbjqnygh
+              value: sqpivtck
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -27,6 +27,8 @@ spec:
                   key: KUMULUZEE_DATASOURCES0_PASSWORD
             - name: KUMULUZEE_AMQP_RABBITMQ_HOSTS0_URL
               value: rabbitmq
+            - name: KUMULUZEE_DATASOURCES0_POOL_MAX_SIZE
+              value: 4
           ports:
             - containerPort: 8080
               name: products-port
