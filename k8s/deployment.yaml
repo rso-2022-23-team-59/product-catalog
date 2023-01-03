@@ -13,35 +13,26 @@ spec:
         app: product-catalog
     spec:
       containers:
-        - image: metatheory/product-catalog:2022-12-12-13-34-42
+        - image: metatheory/product-catalog:2022-12-28-14-54-38
           name: product-catalog
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-              value: jdbc:postgresql://mouse.db.elephantsql.com:5432/sqpivtck
+              value: jdbc:postgresql://snuffleupagus.db.elephantsql.com:5432/fbjqnygh
             - name: KUMULUZEE_DATASOURCES0_USERNAME
-              value: sqpivtck
+              value: fbjqnygh
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: product-catalog-database-password
                   key: KUMULUZEE_DATASOURCES0_PASSWORD
+            - name: KUMULUZEE_AMQP_RABBITMQ_HOSTS0_URL
+              value: rabbitmq
           ports:
             - containerPort: 8080
               name: products-port
               protocol: TCP
           imagePullPolicy: IfNotPresent
-          livenessProbe:
-            httpGet:
-              path: /health/live
-              port: products-port
-              initialDelaySeconds: 20
-              periodSeconds: 5
-          readinessProbe:
-            httpGet:
-              path: /health/ready
-              port: products-port
-              initialDelaySeconds: 20
-              periodSeconds: 5
+          
 
 ---
 
